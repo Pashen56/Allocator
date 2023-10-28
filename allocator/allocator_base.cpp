@@ -160,26 +160,26 @@ void allocator_base::dump_trusted_memory_blocks_state() const
     unsigned char* first_block = reinterpret_cast<unsigned char*>(_trusted_memory) + get_allocator_service_block_size();
     unsigned char* current_block = first_block;
 
-//    while (current_block - first_block < memory_size)
-//    {
-//        size_t current_block_size;
-//        if (current_block == current_available_block)
-//        {
-//            current_block_size = get_available_block_size(current_block);
-//            to_dump += "avl ";
-//            current_available_block = get_available_block_next_available_block_address(current_available_block);
-//        }
-//        else
-//        {
-//            current_block_size = get_occupied_block_size(current_block);
-//            to_dump += "occ ";
-//        }
-//
-//        to_dump += std::to_string(current_block_size) + "|";
-//        current_block += current_block_size;
-//    }
+    while (current_block - first_block < memory_size)
+    {
+        size_t current_block_size;
+        if (current_block == current_available_block)
+        {
+            current_block_size = get_available_block_size(current_block);
+            to_dump += "avl ";
+            current_available_block = get_available_block_next_available_block_address(current_available_block);
+        }
+        else
+        {
+            current_block_size = get_occupied_block_size(current_block);
+            to_dump += "occ ";
+        }
 
-    //this->debug_with_guard("Memory state: " + to_dump);
+        to_dump += std::to_string(current_block_size) + "|";
+        current_block += current_block_size;
+    }
+
+    this->debug_with_guard("Memory state: " + to_dump);
 }
 
 void* allocator_base::allocate(
